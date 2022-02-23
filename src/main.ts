@@ -123,7 +123,7 @@ async function run(): Promise<void> {
 
     const git = await GitCommandManager.create(repoPath)
 
-    const [fromBranch] = await getFromBranch(git)
+    const fromBranch = await getFromBranch(git)
 
     if (fromBranch.includes(releaseBranchType)) {
       await fetch(git)
