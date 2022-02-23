@@ -231,7 +231,7 @@ function run() {
             const releaseBranchType = core.getInput('release_branch_type');
             const developBranch = core.getInput('develop_branch');
             const git = yield git_command_manager_1.GitCommandManager.create(repoPath);
-            const [fromBranch] = yield getFromBranch(git);
+            const fromBranch = yield getFromBranch(git);
             if (fromBranch.includes(releaseBranchType)) {
                 yield fetch(git);
                 const branches = yield getBranches(git, releaseBranchType);
