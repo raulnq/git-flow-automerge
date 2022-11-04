@@ -15,7 +15,7 @@ The same applies if you have protection rules over your `release` branches that 
 ```yaml
     - uses: actions/checkout@v2
     - name: Merge
-      uses: raulnq/git-flow-automerge@v0.2.0
+      uses: raulnq/git-flow-automerge@v0.3.0
       with:
         ### GITHUB_TOKEN.(required)
         github_token: ${{ secrets.GITHUB_TOKEN }}
