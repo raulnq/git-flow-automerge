@@ -11,7 +11,7 @@ function IsThereBranch(branches, branch) {
 }
 
 function toSemver(versions, options = {}) {
-  const {includePrereleases = true, clean = true} = options
+  const { includePrereleases = true, clean = true } = options
 
   let sortedVersions = versions
     .map(version => version.trim())
@@ -87,7 +87,7 @@ const tryToMerge = async function ({
 
   await fetch(repoPath)
 
-  const branches = await listBranches(repoPath, releaseBranchType)
+  const branches = await listBranches(repoPath)
 
   if (!IsThereBranch(branches, developBranch)) {
     core.info(`Missing ${developBranch} branch`)
@@ -95,7 +95,11 @@ const tryToMerge = async function ({
     return ''
   }
 
-  const targetBranch = getTargetBranch(branches, currentBranch, developBranch)
+  const releaseBranches = branches.filter(branch =>
+    branch.includes(releaseBranchType)
+  )
+
+  const targetBranch = getTargetBranch(releaseBranches, currentBranch, developBranch)
 
   try {
     core.info(`Merge branch:${currentBranch} to: ${targetBranch}`)
@@ -166,4 +170,4 @@ const tryToMerge = async function ({
   }
 }
 
-module.exports = {tryToMerge, getTargetBranch}
+module.exports = { tryToMerge, getTargetBranch }

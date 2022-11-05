@@ -1,6 +1,6 @@
 const io = require('@actions/io')
 const exec = require('@actions/exec')
-const {context, getOctokit} = require('@actions/github')
+const { context, getOctokit } = require('@actions/github')
 
 function splitLines(multilineString) {
   return multilineString
@@ -58,12 +58,10 @@ const getCurrentBranch = async function (workingDirectory) {
   }
 }
 
-const listBranches = async function (workingDirectory, branchType) {
+const listBranches = async function (workingDirectory) {
   const branches = await execute(['branch', '-r', '--list'], workingDirectory)
   if (branches.exitCode === 0) {
-    return splitLines(branches.stdout).filter(branch =>
-      branch.includes(branchType)
-    )
+    return splitLines(branches.stdout)
   } else {
     return []
   }
@@ -86,7 +84,7 @@ const merge = async function (token, from, to) {
 const getCurrentPullRequest = async function (token, owner, repo, from, to) {
   const octokit = getOctokit(token)
 
-  const {data: currentPulls} = await octokit.rest.pulls.list({
+  const { data: currentPulls } = await octokit.rest.pulls.list({
     owner,
     repo
   })
@@ -101,7 +99,7 @@ const getCurrentPullRequest = async function (token, owner, repo, from, to) {
 const hasContentDifference = async function (token, owner, repo, from, to) {
   const octokit = getOctokit(token)
 
-  const {data: response} = await octokit.rest.repos.compareCommits({
+  const { data: response } = await octokit.rest.repos.compareCommits({
     owner,
     repo,
     base: to,
@@ -116,7 +114,7 @@ const hasContentDifference = async function (token, owner, repo, from, to) {
 const createPullRequest = async function (token, owner, repo, from, to) {
   const octokit = getOctokit(token)
 
-  const {data: pullRequest} = await octokit.rest.pulls.create({
+  const { data: pullRequest } = await octokit.rest.pulls.create({
     owner,
     repo,
     head: from,

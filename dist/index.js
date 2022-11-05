@@ -17,7 +17,7 @@ function IsThereBranch(branches, branch) {
 }
 
 function toSemver(versions, options = {}) {
-  const {includePrereleases = true, clean = true} = options
+  const { includePrereleases = true, clean = true } = options
 
   let sortedVersions = versions
     .map(version => version.trim())
@@ -93,7 +93,7 @@ const tryToMerge = async function ({
 
   await fetch(repoPath)
 
-  const branches = await listBranches(repoPath, releaseBranchType)
+  const branches = await listBranches(repoPath)
 
   if (!IsThereBranch(branches, developBranch)) {
     core.info(`Missing ${developBranch} branch`)
@@ -101,7 +101,11 @@ const tryToMerge = async function ({
     return ''
   }
 
-  const targetBranch = getTargetBranch(branches, currentBranch, developBranch)
+  const releaseBranches = branches.filter(branch =>
+    branch.includes(releaseBranchType)
+  )
+
+  const targetBranch = getTargetBranch(releaseBranches, currentBranch, developBranch)
 
   try {
     core.info(`Merge branch:${currentBranch} to: ${targetBranch}`)
@@ -172,7 +176,7 @@ const tryToMerge = async function ({
   }
 }
 
-module.exports = {tryToMerge, getTargetBranch}
+module.exports = { tryToMerge, getTargetBranch }
 
 
 /***/ }),
@@ -182,7 +186,7 @@ module.exports = {tryToMerge, getTargetBranch}
 
 const io = __nccwpck_require__(7436)
 const exec = __nccwpck_require__(1514)
-const {context, getOctokit} = __nccwpck_require__(5438)
+const { context, getOctokit } = __nccwpck_require__(5438)
 
 function splitLines(multilineString) {
   return multilineString
@@ -240,12 +244,10 @@ const getCurrentBranch = async function (workingDirectory) {
   }
 }
 
-const listBranches = async function (workingDirectory, branchType) {
+const listBranches = async function (workingDirectory) {
   const branches = await execute(['branch', '-r', '--list'], workingDirectory)
   if (branches.exitCode === 0) {
-    return splitLines(branches.stdout).filter(branch =>
-      branch.includes(branchType)
-    )
+    return splitLines(branches.stdout)
   } else {
     return []
   }
@@ -268,7 +270,7 @@ const merge = async function (token, from, to) {
 const getCurrentPullRequest = async function (token, owner, repo, from, to) {
   const octokit = getOctokit(token)
 
-  const {data: currentPulls} = await octokit.rest.pulls.list({
+  const { data: currentPulls } = await octokit.rest.pulls.list({
     owner,
     repo
   })
@@ -283,7 +285,7 @@ const getCurrentPullRequest = async function (token, owner, repo, from, to) {
 const hasContentDifference = async function (token, owner, repo, from, to) {
   const octokit = getOctokit(token)
 
-  const {data: response} = await octokit.rest.repos.compareCommits({
+  const { data: response } = await octokit.rest.repos.compareCommits({
     owner,
     repo,
     base: to,
@@ -298,7 +300,7 @@ const hasContentDifference = async function (token, owner, repo, from, to) {
 const createPullRequest = async function (token, owner, repo, from, to) {
   const octokit = getOctokit(token)
 
-  const {data: pullRequest} = await octokit.rest.pulls.create({
+  const { data: pullRequest } = await octokit.rest.pulls.create({
     owner,
     repo,
     head: from,
