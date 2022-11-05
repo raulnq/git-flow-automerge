@@ -1,4 +1,4 @@
-const {tryToMerge, getTargetBranch} = require('./automerger.js')
+const { tryToMerge, getTargetBranch } = require('./automerger.js')
 
 test('tryToMerge_non_release_branch_type_should_be_skipped', async () => {
   const currentBranch = Promise.resolve('feature/ABC-123')
