@@ -76,7 +76,7 @@ const tryToMerge = async function ({
   token,
   merge,
   owner,
-  repository,
+  repo,
   getCurrentPullRequest,
   hasContentDifference,
   createPullRequest
@@ -117,13 +117,13 @@ const tryToMerge = async function ({
     return hash
   } catch (error) {
     core.info(
-      `Merge branch:${currentBranch} to: ${targetBranch} failed:${error.message}`
+      `Merge branch:${currentBranch} to: ${targetBranch} failed: ${error.message}`
     )
 
     const currentPullRequest = await getCurrentPullRequest(
       token,
       owner,
-      repository,
+      repo,
       currentBranch,
       targetBranch
     )
@@ -140,7 +140,7 @@ const tryToMerge = async function ({
       !(await hasContentDifference(
         token,
         owner,
-        repository,
+        repo,
         currentBranch,
         targetBranch
       ))
@@ -155,7 +155,7 @@ const tryToMerge = async function ({
     const pullRequest = await createPullRequest(
       token,
       owner,
-      repository,
+      repo,
       currentBranch,
       targetBranch
     )
@@ -14468,7 +14468,7 @@ var __webpack_exports__ = {};
 (() => {
 const core = __nccwpck_require__(2186)
 const path = __nccwpck_require__(1017)
-const {tryToMerge} = __nccwpck_require__(3606)
+const { tryToMerge } = __nccwpck_require__(3606)
 const {
   fetch,
   getCurrentBranch,
@@ -14499,7 +14499,7 @@ async function run() {
 
     const [owner, repo] = githubRepository.split('/')
 
-    core.info(`owner: ${owner} repository: ${repo}`)
+    core.info(`owner: ${owner} repo: ${repo}`)
 
     const releaseBranchType = core.getInput('release_branch_type')
 

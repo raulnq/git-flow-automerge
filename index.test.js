@@ -87,7 +87,7 @@ test('tryToMerge_throws_an_merge_exception_with_active_pr_should_be_skipped', as
     token: 'token',
     merge: () => mergeError,
     owner: 'owner',
-    repository: 'repo',
+    repo: 'repo',
     getCurrentPullRequest: () => pullRequest
   })
 
@@ -118,7 +118,7 @@ test('tryToMerge_throws_an_merge_exception_with_no_active_pr_and_no_content_diff
     token: 'token',
     merge: () => mergeError,
     owner: 'owner',
-    repository: 'repo',
+    repo: 'repo',
     getCurrentPullRequest: () => null,
     hasContentDifference: () => hasContentDifference
   })
@@ -155,7 +155,7 @@ test('tryToMerge_throws_an_merge_exception_with_no_active_pr_and_content_differe
     token: 'token',
     merge: () => mergeError,
     owner: 'owner',
-    repository: 'repo',
+    repo: 'repo',
     getCurrentPullRequest: () => null,
     hasContentDifference: () => hasContentDifference,
     createPullRequest: () => pullRequest

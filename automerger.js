@@ -70,7 +70,7 @@ const tryToMerge = async function ({
   token,
   merge,
   owner,
-  repository,
+  repo,
   getCurrentPullRequest,
   hasContentDifference,
   createPullRequest
@@ -111,13 +111,13 @@ const tryToMerge = async function ({
     return hash
   } catch (error) {
     core.info(
-      `Merge branch:${currentBranch} to: ${targetBranch} failed:${error.message}`
+      `Merge branch:${currentBranch} to: ${targetBranch} failed: ${error.message}`
     )
 
     const currentPullRequest = await getCurrentPullRequest(
       token,
       owner,
-      repository,
+      repo,
       currentBranch,
       targetBranch
     )
@@ -134,7 +134,7 @@ const tryToMerge = async function ({
       !(await hasContentDifference(
         token,
         owner,
-        repository,
+        repo,
         currentBranch,
         targetBranch
       ))
@@ -149,7 +149,7 @@ const tryToMerge = async function ({
     const pullRequest = await createPullRequest(
       token,
       owner,
-      repository,
+      repo,
       currentBranch,
       targetBranch
     )

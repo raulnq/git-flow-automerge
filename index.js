@@ -1,6 +1,6 @@
 const core = require('@actions/core')
 const path = require('path')
-const {tryToMerge} = require('./automerger.js')
+const { tryToMerge } = require('./automerger.js')
 const {
   fetch,
   getCurrentBranch,
@@ -31,7 +31,7 @@ async function run() {
 
     const [owner, repo] = githubRepository.split('/')
 
-    core.info(`owner: ${owner} repository: ${repo}`)
+    core.info(`owner: ${owner} repo: ${repo}`)
 
     const releaseBranchType = core.getInput('release_branch_type')
 
