@@ -202,6 +202,43 @@ describe('getTargetBranch_should_match_expected_branch', () => {
       ['origin/develop', 'origin/feature/ABC-0001', 'origin/release/1.0.0'],
       'release/1.0.0',
       'develop'
+    ],
+    [
+      [
+        'origin/develop',
+        'origin/release/1.40.0',
+        'origin/release/1.40.1',
+        'origin/release/1.40.2',
+        'origin/release/1.40.3',
+        'origin/release/1.40.4',
+        'origin/release/1.40.5',
+        'origin/release/1.40.6',
+        'origin/release/1.40.7',
+        'origin/release/1.40.8',
+        'origin/release/1.40.9',
+        'origin/release/1.40.10'
+      ],
+      'release/1.40.10',
+      'develop'
+    ],
+    [
+      [
+        'origin/develop',
+        'origin/release/1.40.0',
+        'origin/release/1.40.1',
+        'origin/release/1.40.2',
+        'origin/release/1.40.3',
+        'origin/release/1.40.4',
+        'origin/release/1.40.5',
+        'origin/release/1.40.6',
+        'origin/release/1.40.7',
+        'origin/release/1.40.8',
+        'origin/release/1.40.9',
+        'origin/release/1.40.10',
+        'origin/release/1.40.11'
+      ],
+      'release/1.40.10',
+      'release/1.40.11'
     ]
   ])('test %s - %s - %s', (branches, currentBranch, target) => {
     var branch = getTargetBranch(branches, currentBranch, 'develop')

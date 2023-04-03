@@ -35,11 +35,12 @@ function toSemver(versions, options = {}) {
 function getTargetBranch(branches, currentBranch, developBranch) {
   const versions = toSemver(branches)
   let nextBranch = ''
+  const cleanCurrentBranch = cleanSemver(currentBranch)
   const reversedVersions = versions.reverse()
   let nextVersionIndex = -1
   for (let index = 0; index < reversedVersions.length; index++) {
     const version = reversedVersions[index]
-    if (currentBranch.includes(version)) {
+    if (cleanCurrentBranch === version) {
       nextVersionIndex = index + 1
       break
     }
